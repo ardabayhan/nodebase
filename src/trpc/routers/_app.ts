@@ -1,8 +1,7 @@
 import { inngest } from "@/inngest/client";
 import { baseProcedure, createTRPCRouter, protectedProcedure } from "../init";
 import prisma from "@/lib/db";
-import { google } from '@ai-sdk/google';
-import { generateText } from 'ai';
+import { TRPCError } from "@trpc/server";
 
 export const appRouter = createTRPCRouter({
   testAi: baseProcedure.mutation(async () => {
