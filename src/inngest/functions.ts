@@ -1,8 +1,8 @@
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import * as Sentry from "@sentry/nextjs";
+import { generateText } from "ai";
 import prisma from "@/lib/db";
 import { inngest } from "./client";
-import * as Sentry from "@sentry/nextjs";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { generateText } from "ai";
 
 const google = createGoogleGenerativeAI();
 
@@ -12,13 +12,15 @@ export const execute = inngest.createFunction(
   async ({ event, step }) => {
     await step.sleep("pretend", "5s");
 
-    Sentry.logger.info('User triggered test log', { log_source: 'sentry_test' })
+    Sentry.logger.info("User triggered test log", {
+      log_source: "sentry_test",
+    });
     console.warn("Something is missing");
     console.error("This is an error i want to track");
 
     const { steps: geminiSteps } = await step.ai.wrap(
       "gemini-generate-text",
-      generateText, 
+      generateText,
       {
         model: google("gemini-2.5-flash"),
         system: "You are a helpful assistant.",
@@ -28,7 +30,7 @@ export const execute = inngest.createFunction(
           recordInputs: true,
           recordOutputs: true,
         },
-      }
+      },
     );
 
     return geminiSteps;

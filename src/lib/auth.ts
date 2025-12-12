@@ -22,13 +22,13 @@ export const auth = betterAuth({
             {
               productId: "1eedaaa2-dbbb-4791-9f71-b0e30a15af90",
               slug: "pro",
-            }
+            },
           ],
           successUrl: process.env.POLAR_SUCCESS_URL,
           authenticatedUsersOnly: true,
         }),
         portal(),
       ],
-    })
-  ]
+    }),
+  ],
 });

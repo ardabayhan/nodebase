@@ -1,7 +1,7 @@
-import { NodeProps } from "@xyflow/react";
+import type { NodeProps } from "@xyflow/react";
+import { MousePointerIcon } from "lucide-react";
 import { memo } from "react";
 import { BaseTriggerNode } from "../base-trigger-node";
-import { MousePointerIcon } from "lucide-react";
 
 export const ManualTriggerNode = memo((props: NodeProps) => {
   return (
@@ -15,5 +15,5 @@ export const ManualTriggerNode = memo((props: NodeProps) => {
         // onDoubleClick={handleOpenSettings} TODO
       />
     </>
-  )
-})
+  );
+});

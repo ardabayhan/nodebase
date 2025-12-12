@@ -33,7 +33,7 @@ const loginSchema = z.object({
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
-export function LoginForm(){
+export function LoginForm() {
   const router = useRouter();
 
   const form = useForm<LoginFormValues>({
@@ -45,18 +45,21 @@ export function LoginForm(){
   });
 
   const onSubmit = async (values: LoginFormValues) => {
-    await authClient.signIn.email({
-      email: values.email,
-      password: values.password,
-      callbackURL: "/",
-    }, {
-      onSuccess: () => {
-        router.push("/");
+    await authClient.signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+        callbackURL: "/",
       },
-      onError: (ctx) => {
-        toast.error(ctx.error.message);
+      {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
       },
-    });
+    );
   };
 
   const isPending = form.formState.isSubmitting;
@@ -64,15 +67,11 @@ export function LoginForm(){
   return (
     <div className="flex flex-col gap-6">
       <Card>
-         <CardHeader className="text-center">
-            <CardTitle>
-              Welcome back
-            </CardTitle>
-            <CardDescription>
-              Login to continue
-            </CardDescription>
-         </CardHeader>
-         <CardContent>
+        <CardHeader className="text-center">
+          <CardTitle>Welcome back</CardTitle>
+          <CardDescription>Login to continue</CardDescription>
+        </CardHeader>
+        <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="grid gap-6">
@@ -83,7 +82,12 @@ export function LoginForm(){
                     type="button"
                     disabled={isPending}
                   >
-                    <Image alt="GitHub" src="/logos/github.svg" width={20} height={20} />
+                    <Image
+                      alt="GitHub"
+                      src="/logos/github.svg"
+                      width={20}
+                      height={20}
+                    />
                     Continue with GitHub
                   </Button>
                   <Button
@@ -92,19 +96,24 @@ export function LoginForm(){
                     type="button"
                     disabled={isPending}
                   >
-                    <Image alt="Google" src="/logos/google.svg" width={20} height={20} />
+                    <Image
+                      alt="Google"
+                      src="/logos/google.svg"
+                      width={20}
+                      height={20}
+                    />
                     Continue with Google
                   </Button>
                 </div>
                 <div className="grid gap-6">
-                  <FormField 
+                  <FormField
                     control={form.control}
                     name="email"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input 
+                          <Input
                             type="email"
                             placeholder="m@example.com"
                             {...field}
@@ -114,14 +123,14 @@ export function LoginForm(){
                       </FormItem>
                     )}
                   />
-                  <FormField 
+                  <FormField
                     control={form.control}
                     name="password"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input 
+                          <Input
                             type="password"
                             placeholder="********"
                             {...field}
@@ -144,8 +153,8 @@ export function LoginForm(){
               </div>
             </form>
           </Form>
-         </CardContent>
+        </CardContent>
       </Card>
     </div>
   );
-};
+}

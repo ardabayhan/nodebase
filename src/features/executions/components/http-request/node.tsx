@@ -20,19 +20,19 @@ export const HttpRequestNode = memo((props: NodeProps<HTTPRequestNodeType>) => {
     ? `${nodeData.method || "GET"}: ${nodeData.endpoint}`
     : "Not configured";
 
-    return (
-      <>
-        <BaseExecutionNode
-          {...props}
-          id={props.id}
-          icon={GlobeIcon}
-          name="HTTP Request"
-          description={description}
-          onSettings={() => {}}
-          onDoubleClick={() =>{}}
-        />
-      </>
-    )
+  return (
+    <>
+      <BaseExecutionNode
+        {...props}
+        id={props.id}
+        icon={GlobeIcon}
+        name="HTTP Request"
+        description={description}
+        onSettings={() => {}}
+        onDoubleClick={() => {}}
+      />
+    </>
+  );
 });
 
 HttpRequestNode.displayName = "HttpRequestNode";

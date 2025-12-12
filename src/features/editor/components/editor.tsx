@@ -1,31 +1,31 @@
 "use client";
 
-import { 
-  ReactFlow, 
-  applyNodeChanges, 
-  applyEdgeChanges, 
+import {
   addEdge,
-  type Node,
-  type Edge,
-  type NodeChange,
-  type EdgeChange,
-  type Connection,
+  applyEdgeChanges,
+  applyNodeChanges,
   Background,
+  type Connection,
   Controls,
+  type Edge,
+  type EdgeChange,
   MiniMap,
+  type Node,
+  type NodeChange,
   Panel,
+  ReactFlow,
 } from "@xyflow/react";
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 import { ErrorView, LoadingView } from "@/components/entity-components";
 import { useSuspenseWorkflow } from "@/features/workflows/hooks/use-workflows";
 
 import "@xyflow/react/dist/style.css";
-import { nodeComponents } from "@/config/node-components";
-import { AddNodeButton } from "./add-node-button";
 import { useSetAtom } from "jotai";
+import { nodeComponents } from "@/config/node-components";
 import { editorAtom } from "../store/atoms";
+import { AddNodeButton } from "./add-node-button";
 
-export const EditorLoading = () =>{
+export const EditorLoading = () => {
   return <LoadingView message="Loading editor..." />;
 };
 
@@ -34,9 +34,7 @@ export const EditorError = () => {
 };
 
 export const Editor = ({ workflowId }: { workflowId: string }) => {
-  const { 
-    data: workflow
-  } = useSuspenseWorkflow(workflowId);
+  const { data: workflow } = useSuspenseWorkflow(workflowId);
 
   const setEditor = useSetAtom(editorAtom);
 
@@ -44,15 +42,18 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
   const [edges, setEdges] = useState<Edge[]>(workflow.edges);
 
   const onNodesChange = useCallback(
-    (changes: NodeChange[]) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
+    (changes: NodeChange[]) =>
+      setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
     [],
   );
   const onEdgesChange = useCallback(
-    (changes: EdgeChange[]) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
+    (changes: EdgeChange[]) =>
+      setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
     [],
   );
   const onConnect = useCallback(
-    (params: Connection) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
+    (params: Connection) =>
+      setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
     [],
   );
 

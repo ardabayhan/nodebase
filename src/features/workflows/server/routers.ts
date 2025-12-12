@@ -1,10 +1,14 @@
+import type { Edge, Node } from "@xyflow/react";
 import { generateSlug } from "random-word-slugs";
-import prisma from "@/lib/db";
-import type { Node, Edge } from "@xyflow/react";
-import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
 import z from "zod";
 import { PAGINATION } from "@/config/constants";
 import { NodeType } from "@/generated/prisma";
+import prisma from "@/lib/db";
+import {
+  createTRPCRouter,
+  premiumProcedure,
+  protectedProcedure,
+} from "@/trpc/init";
 
 export const workflowsRouter = createTRPCRouter({
   create: premiumProcedure.mutation(({ ctx }) => {
@@ -120,7 +124,7 @@ export const workflowsRouter = createTRPCRouter({
       const nodes: Node[] = workflow.nodes.map((node) => ({
         id: node.id,
         type: node.type,
-        position: node.position as { x: number, y: number },
+        position: node.position as { x: number; y: number },
         data: (node.data as Record<string, unknown>) || {},
       }));
 
@@ -150,14 +154,14 @@ export const workflowsRouter = createTRPCRouter({
           .max(PAGINATION.MAX_PAGE_SIZE)
           .default(PAGINATION.DEFAULT_PAGE_SIZE),
         search: z.string().default(""),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
-      const { page, pageSize, search } =input;
+      const { page, pageSize, search } = input;
 
       const [items, totalCount] = await Promise.all([
         prisma.workflow.findMany({
-          skip: (page - 1) *  pageSize,
+          skip: (page - 1) * pageSize,
           take: pageSize,
           where: {
             userId: ctx.auth.user.id,
