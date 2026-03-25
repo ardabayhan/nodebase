@@ -8,7 +8,7 @@ interface UseNodeStatusOptions {
   channel: string;
   topic: string;
   refreshToken: () => Promise<Realtime.Subscribe.Token>;
-};
+}
 
 export function useNodeStatus({
   nodeId,
@@ -52,4 +52,4 @@ export function useNodeStatus({
   }, [data, nodeId, channel, topic]);
 
   return status;
-};
+}

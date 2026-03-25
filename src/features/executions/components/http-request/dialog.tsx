@@ -1,5 +1,10 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -26,21 +31,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
   variableName: z
     .string()
     .min(1, { message: "Variable name is required" })
     .regex(/^[A-Za-z_$][A-Za-z0-9_$]*$/, {
-      message: "Variable name must start with a letter or underscore and container only letters, numbers, and underscores",
+      message:
+        "Variable name must start with a letter or underscore and container only letters, numbers, and underscores",
     }),
-  endpoint: z.string()
-    .min(1, { message: "Please enter a valid URL" }),
+  endpoint: z.string().min(1, { message: "Please enter a valid URL" }),
   method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]),
   body: z.string().optional(),
   // .refine() TODO JSON5
@@ -113,10 +113,7 @@ export const HttpRequestDialog = ({
                 <FormItem>
                   <FormLabel>Variable Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="myApiCall"
-                      {...field}
-                    />
+                    <Input placeholder="myApiCall" {...field} />
                   </FormControl>
                   <FormDescription>
                     Use this name to reference the result in other nodes:{" "}
@@ -185,7 +182,7 @@ export const HttpRequestDialog = ({
                     <FormLabel>Request Body</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder= {
+                        placeholder={
                           '{\n  "userId": "{{httpResponse.data.id}}",\n  "name": "{{httpResponse.data.name}}",\n  "items": "{{httpResponse.data.items}}\n}'
                         }
                         className="min-h-[120px] font-mono text-sm"
@@ -193,7 +190,9 @@ export const HttpRequestDialog = ({
                       />
                     </FormControl>
                     <FormDescription>
-                      JSON with template variables. Use {"{{variables}}"} for simple values or {"{{json variable}}"} to stringify objects
+                      JSON with template variables. Use {"{{variables}}"} for
+                      simple values or {"{{json variable}}"} to stringify
+                      objects
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

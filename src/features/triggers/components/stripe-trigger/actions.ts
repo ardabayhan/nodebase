@@ -9,11 +9,11 @@ export type StripeTriggerToken = Realtime.Token<
   ["status"]
 >;
 
-export async function fetchStripeTriggerRealtimeToken():Promise<StripeTriggerToken> {
+export async function fetchStripeTriggerRealtimeToken(): Promise<StripeTriggerToken> {
   const token = await getSubscriptionToken(inngest, {
     channel: stripeTriggerChannel(),
     topics: ["status"],
   });
 
   return token;
-};
+}

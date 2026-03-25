@@ -29,7 +29,7 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
     httpRequestChannel().status({
       nodeId,
       status: "loading",
-    })
+    }),
   );
 
   try {
@@ -39,10 +39,10 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
           httpRequestChannel().status({
             nodeId,
             status: "error",
-          })
+          }),
         );
         throw new NonRetriableError(
-          "HTTP Request node: No endpoint configured"
+          "HTTP Request node: No endpoint configured",
         );
       }
 
@@ -51,10 +51,10 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
           httpRequestChannel().status({
             nodeId,
             status: "error",
-          })
+          }),
         );
         throw new NonRetriableError(
-          "HTTP Request node: Variable name not configured"
+          "HTTP Request node: Variable name not configured",
         );
       }
 
@@ -63,7 +63,7 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
           httpRequestChannel().status({
             nodeId,
             status: "error",
-          })
+          }),
         );
         throw new NonRetriableError("HTTP Request node: Method not configured");
       }
@@ -106,7 +106,7 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
       httpRequestChannel().status({
         nodeId,
         status: "success",
-      })
+      }),
     );
 
     return result;
@@ -115,7 +115,7 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
       httpRequestChannel().status({
         nodeId,
         status: "error",
-      })
+      }),
     );
     throw error;
   }

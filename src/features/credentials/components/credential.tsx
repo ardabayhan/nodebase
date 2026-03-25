@@ -1,17 +1,19 @@
 "use client";
 
-import { CredentialType } from "@/generated/prisma";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import {
-  useCreateCredential,
-  useUpdateCredential,
-  useSuspenseCredential,
-} from "../hooks/use-credentials";
-import { useUpgradeModal } from "@/hooks/use-upgrade-modal";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import z from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -28,15 +30,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { CredentialType } from "@/generated/prisma";
+import { useUpgradeModal } from "@/hooks/use-upgrade-modal";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+  useCreateCredential,
+  useSuspenseCredential,
+  useUpdateCredential,
+} from "../hooks/use-credentials";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -171,11 +171,7 @@ export const CredentialForm = ({ initialData }: CredentialFormProps) => {
                   <FormItem>
                     <FormLabel>API Key</FormLabel>
                     <FormControl>
-                      <Input
-                      type="password" 
-                      placeholder="sk-..."
-                      {...field} 
-                    />
+                      <Input type="password" placeholder="sk-..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -186,17 +182,12 @@ export const CredentialForm = ({ initialData }: CredentialFormProps) => {
                 <Button
                   type="submit"
                   disabled={
-                    createCredential.isPending ||
-                    updateCredential.isPending
+                    createCredential.isPending || updateCredential.isPending
                   }
                 >
                   {isEdit ? "Update" : "Create"}
                 </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  asChild
-                >
+                <Button type="button" variant="outline" asChild>
                   <Link href="/credentials" prefetch>
                     Cancel
                   </Link>
@@ -210,10 +201,8 @@ export const CredentialForm = ({ initialData }: CredentialFormProps) => {
   );
 };
 
-export const CredentialView = ({
-  credentialId,
-}: { credentialId: string }) => {
+export const CredentialView = ({ credentialId }: { credentialId: string }) => {
   const { data: credential } = useSuspenseCredential(credentialId);
 
-  return <CredentialForm initialData={credential} />
+  return <CredentialForm initialData={credential} />;
 };

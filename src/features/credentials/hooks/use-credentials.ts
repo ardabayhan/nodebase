@@ -5,9 +5,9 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { toast } from "sonner";
+import type { CredentialType } from "@/generated/prisma";
 import { useTRPC } from "@/trpc/client";
 import { useCredentialsParams } from "./use-credentials-params";
-import { CredentialType } from "@/generated/prisma";
 
 /**
  * Hook to fetch all credentials using suspense
@@ -30,7 +30,9 @@ export const useCreateCredential = () => {
     trpc.credentials.create.mutationOptions({
       onSuccess: (data) => {
         toast.success(`Credential "${data.name}" created`);
-        queryClient.invalidateQueries(trpc.credentials.getMany.queryOptions({}));
+        queryClient.invalidateQueries(
+          trpc.credentials.getMany.queryOptions({}),
+        );
       },
       onError: (error) => {
         toast.error(`Failed to create credential: ${error.message}`);
@@ -50,7 +52,9 @@ export const useRemoveCredential = () => {
     trpc.credentials.remove.mutationOptions({
       onSuccess: (data) => {
         toast.success(`Credential "${data.name}" removed`);
-        queryClient.invalidateQueries(trpc.credentials.getMany.queryOptions({}));
+        queryClient.invalidateQueries(
+          trpc.credentials.getMany.queryOptions({}),
+        );
         queryClient.invalidateQueries(
           trpc.credentials.getOne.queryFilter({ id: data.id }),
         );
@@ -78,7 +82,9 @@ export const useUpdateCredential = () => {
     trpc.credentials.update.mutationOptions({
       onSuccess: (data) => {
         toast.success(`Credential "${data.name}" saved`);
-        queryClient.invalidateQueries(trpc.credentials.getMany.queryOptions({}));
+        queryClient.invalidateQueries(
+          trpc.credentials.getMany.queryOptions({}),
+        );
         queryClient.invalidateQueries(
           trpc.credentials.getOne.queryOptions({ id: data.id }),
         );
@@ -96,4 +102,4 @@ export const useUpdateCredential = () => {
 export const useCredentialsByType = (type: CredentialType) => {
   const trpc = useTRPC();
   return useQuery(trpc.credentials.getByType.queryOptions({ type }));
-}
+};
