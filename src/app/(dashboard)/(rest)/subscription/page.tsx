@@ -19,7 +19,7 @@ const Page = () => {
   // );
   return null;
   // return (
-    // <Button onClick={() => testAI.mutate()}>Click to test subscription</Button>
+  // <Button onClick={() => testAI.mutate()}>Click to test subscription</Button>
   // );
 };
 

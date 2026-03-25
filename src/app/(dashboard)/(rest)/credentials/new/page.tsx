@@ -11,6 +11,6 @@ const Page = async () => {
       </div>
     </div>
   );
-}
+};
 
 export default Page;

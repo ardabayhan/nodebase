@@ -1,5 +1,10 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -19,11 +24,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
   variableName: z
@@ -33,9 +33,7 @@ const formSchema = z.object({
       message:
         "Variable name must start with a letter or underscore and container only letters, numbers, and underscores",
     }),
-  content: z
-    .string()
-    .min(1, "Message content is required"),
+  content: z.string().min(1, "Message content is required"),
   webhookUrl: z.string().min(1, "Webhook URL is required"),
 });
 
@@ -120,13 +118,14 @@ export const SlackDialog = ({
                 <FormItem>
                   <FormLabel>Webhook URL</FormLabel>
                   <FormControl>
-                    <Input 
+                    <Input
                       placeholder="https://discord.com/api/webhooks/..."
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    Get this from Slack: Workspace Settings → Workflows → Webhooks
+                    Get this from Slack: Workspace Settings → Workflows →
+                    Webhooks
                   </FormDescription>
                   <FormDescription>
                     Make sure you have "content" variable

@@ -57,7 +57,7 @@ export const credentialsRouter = createTRPCRouter({
           name,
           type,
           value, // TODO: Consider encrypting in production
-        }
+        },
       });
     }),
   getOne: protectedProcedure
@@ -126,7 +126,7 @@ export const credentialsRouter = createTRPCRouter({
     .input(
       z.object({
         type: z.enum(CredentialType),
-      })
+      }),
     )
     .query(({ input, ctx }) => {
       const { type } = input;

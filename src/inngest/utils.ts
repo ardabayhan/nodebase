@@ -1,6 +1,7 @@
-import { Connection, Node } from "@/generated/prisma";
 import toposort from "toposort";
+import type { Connection, Node } from "@/generated/prisma";
 import { inngest } from "./client";
+import { createId } from "@paralleldrive/cuid2";
 
 export const topologicalSort = (
   nodes: Node[],
@@ -39,7 +40,7 @@ export const topologicalSort = (
   } catch (error) {
     if (error instanceof Error && error.message.includes("Cyclic")) {
       throw new Error("Workflow contains a cycle");
-    } 
+    }
     throw error;
   }
 
@@ -55,5 +56,6 @@ export const sendWorkflowExecution = async (data: {
   return inngest.send({
     name: "workflows/execute.workflow",
     data,
+    id: createId(),
   });
 };

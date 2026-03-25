@@ -1,9 +1,9 @@
 import Handlebars from "handlebars";
 import { decode } from "html-entities";
 import { NonRetriableError } from "inngest";
+import ky from "ky";
 import type { NodeExecutor } from "@/features/executions/types";
 import { discordChannel } from "@/inngest/channels/discord";
-import ky from "ky";
 
 Handlebars.registerHelper("json", (context) => {
   const jsonString = JSON.stringify(context, null, 2);
@@ -83,7 +83,7 @@ export const discordExecutor: NodeExecutor<DiscordData> = async ({
         [data.variableName]: {
           messageContent: content.slice(0, 2000),
         },
-      }
+      };
     });
 
     await publish(

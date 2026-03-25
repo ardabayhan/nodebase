@@ -1,7 +1,7 @@
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { generateText } from "ai";
 import Handlebars from "handlebars";
 import { NonRetriableError } from "inngest";
-import { generateText } from "ai";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import type { NodeExecutor } from "@/features/executions/types";
 import { geminiChannel } from "@/inngest/channels/gemini";
 import prisma from "@/lib/db";
@@ -32,7 +32,7 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
     geminiChannel().status({
       nodeId,
       status: "loading",
-    })
+    }),
   );
 
   if (!data.variableName) {
@@ -40,7 +40,7 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
       geminiChannel().status({
         nodeId,
         status: "error",
-      })
+      }),
     );
     throw new NonRetriableError("Gemini node: Variable name is missing");
   }
@@ -50,7 +50,7 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
       geminiChannel().status({
         nodeId,
         status: "error",
-      })
+      }),
     );
     throw new NonRetriableError("Gemini node: Credential is required");
   }
@@ -60,7 +60,7 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
       geminiChannel().status({
         nodeId,
         status: "error",
-      })
+      }),
     );
     throw new NonRetriableError("Gemini node: User prompt is missing");
   }
@@ -79,13 +79,13 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
     });
   });
 
-  if(!credential) {
+  if (!credential) {
     await publish(
       geminiChannel().status({
         nodeId,
         status: "error",
-      })
-    )
+      }),
+    );
     throw new NonRetriableError("Gemini node: Credential not found");
   }
 
@@ -112,7 +112,7 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
       geminiChannel().status({
         nodeId,
         status: "success",
-      })
+      }),
     );
 
     return {
@@ -126,7 +126,7 @@ export const geminiExecutor: NodeExecutor<GeminiData> = async ({
       geminiChannel().status({
         nodeId,
         status: "error",
-      })
+      }),
     );
     throw error;
   }

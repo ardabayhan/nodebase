@@ -1,5 +1,10 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -19,11 +24,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
   variableName: z
@@ -124,13 +124,14 @@ export const DiscordDialog = ({
                 <FormItem>
                   <FormLabel>Webhook URL</FormLabel>
                   <FormControl>
-                    <Input 
+                    <Input
                       placeholder="https://discord.com/api/webhooks/..."
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    Get this from Discord: Channel Settings → Integrations → Webhooks
+                    Get this from Discord: Channel Settings → Integrations →
+                    Webhooks
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -165,10 +166,7 @@ export const DiscordDialog = ({
                 <FormItem>
                   <FormLabel>Bot Username (Optional)</FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="Workflow Bot"
-                      {...field}
-                    />
+                    <Input placeholder="Workflow Bot" {...field} />
                   </FormControl>
                   <FormDescription>
                     Override the webhook's default username

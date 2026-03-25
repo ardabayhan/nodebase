@@ -1,6 +1,9 @@
 "use client";
 
 import { formatDistanceToNow } from "date-fns";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import type React from "react";
 import {
   EmptyView,
   EntityContainer,
@@ -12,8 +15,6 @@ import {
   ErrorView,
   LoadingView,
 } from "@/components/entity-components";
-  import { useRouter } from "next/navigation";
-import type React from "react";
 import type { Credential } from "@/generated/prisma";
 import { CredentialType } from "@/generated/prisma";
 import { useEntitySearch } from "@/hooks/use-entity-search";
@@ -22,7 +23,6 @@ import {
   useSuspenseCredentials,
 } from "../hooks/use-credentials";
 import { useCredentialsParams } from "../hooks/use-credentials-params";
-import Image from "next/image";
 
 export const CredentialsSearch = () => {
   const [params, setParams] = useCredentialsParams();
