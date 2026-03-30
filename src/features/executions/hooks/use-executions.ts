@@ -19,4 +19,3 @@ export const useSuspenseExecution = (id: string) => {
   const trpc = useTRPC();
   return useSuspenseQuery(trpc.executions.getOne.queryOptions({ id }));
 };
-
