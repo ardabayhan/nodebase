@@ -1,10 +1,7 @@
-import prisma from "@/lib/db";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-} from "@/trpc/init";
 import z from "zod";
 import { PAGINATION } from "@/config/constants";
+import prisma from "@/lib/db";
+import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 
 export const executionsRouter = createTRPCRouter({
   getOne: protectedProcedure
@@ -14,8 +11,8 @@ export const executionsRouter = createTRPCRouter({
         where: {
           id: input.id,
           workflow: {
-            userId: ctx.auth.user.id
-          }
+            userId: ctx.auth.user.id,
+          },
         },
         include: {
           workflow: {
@@ -24,7 +21,7 @@ export const executionsRouter = createTRPCRouter({
               name: true,
             },
           },
-        }
+        },
       });
     }),
   getMany: protectedProcedure

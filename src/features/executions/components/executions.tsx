@@ -2,6 +2,12 @@
 
 import { formatDistanceToNow } from "date-fns";
 import {
+  CheckCircle2Icon,
+  ClockIcon,
+  Loader2Icon,
+  XCircleIcon,
+} from "lucide-react";
+import {
   EmptyView,
   EntityContainer,
   EntityHeader,
@@ -11,11 +17,10 @@ import {
   ErrorView,
   LoadingView,
 } from "@/components/entity-components";
-import { useSuspenseExecutions } from "../hooks/use-executions";
-import { useExecutionsParams } from "../hooks/use-executions-params";
 import type { Execution } from "@/generated/prisma";
 import { ExecutionStatus } from "@/generated/prisma";
-import { CheckCircle2Icon, ClockIcon, Loader2Icon, XCircleIcon } from "lucide-react";
+import { useSuspenseExecutions } from "../hooks/use-executions";
+import { useExecutionsParams } from "../hooks/use-executions-params";
 
 export const ExecutionsList = () => {
   const executions = useSuspenseExecutions();
@@ -78,9 +83,7 @@ export const ExecutionsError = () => {
 
 export const ExecutionsEmpty = () => {
   return (
-    <EmptyView
-      message="You haven't created any executions yet. Get started by running your first workflow"
-    />
+    <EmptyView message="You haven't created any executions yet. Get started by running your first workflow" />
   );
 };
 
@@ -95,35 +98,37 @@ const getStatusIcon = (status: ExecutionStatus) => {
     default:
       return <ClockIcon className="size-5 text-muted-foreground" />;
   }
-}
+};
 
 const formatStatus = (status: ExecutionStatus) => {
   return status.charAt(0) + status.slice(1).toLowerCase();
 };
 
 export const ExecutionItem = ({
-  data
+  data,
 }: {
   data: Execution & {
     workflow: {
       id: string;
       name: string;
-    },
+    };
   };
 }) => {
   const duration = data.completedAt
     ? Math.round(
-      (new Date(data.completedAt).getTime() - new Date(data.startedAt).getTime()) / 1000,
-    )
+        (new Date(data.completedAt).getTime() -
+          new Date(data.startedAt).getTime()) /
+          1000,
+      )
     : null;
 
-    const subtitle = (
-      <>
-        {data.workflow.name} &bull; Started{" "}
-        {formatDistanceToNow(data.startedAt, { addSuffix: true })}
-        {duration !== null && <> &bull; Took {duration}s </>}
-      </>
-    );
+  const subtitle = (
+    <>
+      {data.workflow.name} &bull; Started{" "}
+      {formatDistanceToNow(data.startedAt, { addSuffix: true })}
+      {duration !== null && <> &bull; Took {duration}s </>}
+    </>
+  );
 
   return (
     <EntityItem
